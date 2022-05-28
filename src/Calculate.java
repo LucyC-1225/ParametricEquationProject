@@ -60,6 +60,17 @@ public class Calculate {
         String x1 = initialLionPosition[0] + "";
         return "x = " + x1 + " - " + x1 + "/60" + " t";
     }
+
+    private String parametricEquationTigerY() {
+        //y equation
+        String y1 = initialTigerPosition[1] + "";
+        return "y = " + y1 + " - " + y1 + "/120" + " t";
+    }
+    private String parametricEquationLionY() {
+        //y equation
+        String y1 = finalLionPosition[1] + "";
+        return "y = " + y1 + "/60" + " t";
+    }
     private String intersectionPoint() {
         int b2 = finalLionPosition[1];
         int b1 = initialTigerPosition[1];
@@ -70,6 +81,26 @@ public class Calculate {
         double y = m1 * x + b1;
 
         return "(" + x + ", " + y + ")";
+    }
+    private String intersectionTime() {
+        int b2 = finalLionPosition[1];
+        int b1 = initialTigerPosition[1];
+        double m1 = (double)(finalTigerPosition[1] - initialTigerPosition[1]) / (finalTigerPosition[0] - initialTigerPosition[0]);
+        double m2 = (double)(finalLionPosition[1] - initialLionPosition[1]) / (finalLionPosition[0] - initialLionPosition[0]);
+
+        double intersectionX = (b2 - b1) / (m1 - m2);
+
+        //tiger time
+        double tigerTime = intersectionX * 120 / finalTigerPosition[0];
+        //lion time
+        double lionTime = (intersectionX - initialLionPosition[0]) * -60 / initialLionPosition[0];
+
+        return "Tiger time: " + tigerTime + " Lion time: " + lionTime;
+    }
+    public String distanceFormula() {
+        String changeInX = initialLionPosition[0] + " - " + initialLionPosition[0] + " / 60 t - " + finalTigerPosition[0] + " / 120 t";
+        String changeInY = initialTigerPosition[1] + " - " + initialTigerPosition[1] + " / 120 t - " + finalLionPosition[1] + " / 60 t";
+        return "sqrt (" + changeInX + ")^2 + (" + changeInY + ")^2";
     }
     public String toString() {
         String str = "";
@@ -85,10 +116,15 @@ public class Calculate {
         str += "Lion Linear Equation: " + linearEquationLion() + "\n";
         str += "\n";
         str += "Parametric X Tiger Equation: " + parametricEquationTigerX() + "\n";
+        str += "Parametric Y Tiger Equation: " + parametricEquationTigerY() + "\n";
         str += "Parametric X Lion Equation: " + parametricEquationLionX() + "\n";
+        str += "Parametric Y Lion Equation: " + parametricEquationLionY() + "\n";
         //answers
         str += "--------------------------------------------------\n";
         str += "Part A: Point of Intersection: " + intersectionPoint() + "\n";
+        str += "Part B: " + intersectionTime() + "\n";
+        str += "Part C and D: Put the following formula in desmos and find the minimum: y = " + distanceFormula() + "\n";
+        str += "Part E: substitute the time that you got for part C into the parametric equations found in part B";
         return str;
     }
 }
